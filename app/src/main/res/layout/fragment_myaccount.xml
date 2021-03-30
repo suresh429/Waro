@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".fragments.AccountFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/imgProfile"
+                android:text="Buddy"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtName"
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@+id/imgProfile"
+                android:alpha="0.8"
+                android:layout_centerHorizontal="true"
+                android:text="buddy@gmail.com"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/txtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtEmail"
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@+id/imgProfile"
+                android:alpha="0.8"
+                android:text="9876543210"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                />
+
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/circleshape"
+                android:src="@drawable/splash_logo" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:alpha="0.5"
+            android:background="@color/divider" />
+
+
+        <TextView
+            android:id="@+id/txtOrders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:foreground="?selectableItemBackground"
+            android:text="Your Orders"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/ic_orders_24" />
+
+        <TextView
+            android:id="@+id/txtAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:foreground="?selectableItemBackground"
+            android:text="Address Book"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/ic_address_24" />
+
+        <TextView
+            android:id="@+id/txtHelp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:foreground="?selectableItemBackground"
+            android:text="Help"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/ic_help_24" />
+
+        <TextView
+            android:id="@+id/txtAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:foreground="?selectableItemBackground"
+            android:text="About"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/ic_info_24" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.5"
+            android:background="@color/divider" />
+
+        <TextView
+            android:id="@+id/txtReferUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:foreground="?selectableItemBackground"
+            android:text="Refer us"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/ic_share_24" />
+
+        <TextView
+            android:id="@+id/txtSendFeedBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:foreground="?selectableItemBackground"
+            android:text="Send Feedback"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/ic_feedback_24" />
+
+        <TextView
+            android:id="@+id/txtRateUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:foreground="?selectableItemBackground"
+            android:text="Rate us"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/ic_refer_24" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.5"
+            android:background="@color/divider" />
+
+        <TextView
+            android:id="@+id/txtLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/logout"
+            android:textColor="@color/black"
+            android:textSize="19sp"
+            android:foreground="?selectableItemBackground"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</FrameLayout>

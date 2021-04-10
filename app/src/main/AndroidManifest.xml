@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.waro.co">
+    package="com.waro.coin">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,16 +18,16 @@
         android:requestLegacyExternalStorage="true"
         tools:targetApi="m">
         <activity
-            android:name="com.waro.co.activities.HomeActivity"
+            android:name="com.waro.coin.activities.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeHome" />
-        <activity android:name="com.waro.co.activities.LoginActivity"
+        <activity android:name="com.waro.coin.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.waro.co.activities.RegistrationActivity"
+        <activity android:name="com.waro.coin.activities.RegistrationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.waro.co.activities.SplashActivity"
+        <activity android:name="com.waro.coin.activities.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.waro.co.fragments.HomeFragment"
+        android:name="com.waro.coin.fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
 
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/navigation_myaccount"
-        android:name="com.waro.co.fragments.AccountFragment"
+        android:name="com.waro.coin.fragments.AccountFragment"
         android:label="@string/my_account"
         tools:layout="@layout/fragment_myaccount" >
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_history"
-        android:name="com.waro.co.fragments.HistoryFragment"
+        android:name="com.waro.coin.fragments.HistoryFragment"
         android:label="@string/history"
         tools:layout="@layout/fragment_history">
         <action
@@ -52,7 +52,7 @@
 
     <fragment
         android:id="@+id/navigation_cart"
-        android:name="com.waro.co.fragments.CartFragment"
+        android:name="com.waro.coin.fragments.CartFragment"
         android:label="@string/title_cart"
         tools:layout="@layout/fragment_cart">
 
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/restaurantsItemsListFragment"
-        android:name="com.waro.co.fragments.ItemsListFragment"
+        android:name="com.waro.coin.fragments.ItemsListFragment"
         android:label="RestaurantsItemsListFragment"
         tools:layout="@layout/fragment_items_list">
         <action
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/shopsFragment"
-        android:name="com.waro.co.fragments.ShopsFragment"
+        android:name="com.waro.coin.fragments.ShopsFragment"
         android:label="ShopsFragment"
         tools:layout="@layout/fragment_shops_names">
         <action
@@ -80,7 +80,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressListFragment"
-        android:name="com.waro.co.fragments.AddressListFragment"
+        android:name="com.waro.coin.fragments.AddressListFragment"
         android:label="Select Address"
         tools:layout="@layout/address_items_list" >
         <action
@@ -95,7 +95,7 @@
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
-        android:name="com.waro.co.fragments.AddAddressFragment"
+        android:name="com.waro.coin.fragments.AddAddressFragment"
         android:label="AddAddressFragment"
        >
         <action
@@ -105,7 +105,7 @@
     </fragment>
     <fragment
         android:id="@+id/placeOrderFragment"
-        android:name="com.waro.co.fragments.PlaceOrderFragment"
+        android:name="com.waro.coin.fragments.PlaceOrderFragment"
         android:label="PlaceOrderFragment"
         tools:layout="@layout/fragment_placeorder">
 
@@ -115,10 +115,10 @@
     </fragment>
     <fragment
         android:id="@+id/updateAddressFragment"
-        android:name="com.waro.co.fragments.UpdateAddressFragment"
+        android:name="com.waro.coin.fragments.UpdateAddressFragment"
         android:label="UpdateAddressFragment" />
     <fragment
         android:id="@+id/orderSummaryFragment"
-        android:name="com.waro.co.fragments.OrderSummaryFragment"
+        android:name="com.waro.coin.fragments.OrderSummaryFragment"
         android:label="OrderSummaryFragment" />
 </navigation>

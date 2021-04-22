@@ -42,7 +42,7 @@ import retrofit2.Response;
 import static com.waro.coin.network.RetrofitService.IMAGE_HOME_URL;
 
 
-public class PlaceOrderFragment extends Fragment {
+public class PlaceOrderFragment extends Fragment implements ActionBottomDialogFragment.ItemClickListener{
     private static final String TAG = "PlaceOrderFragment";
     private FragmentPlaceorderBinding binding;
     String customerId, shop_id,date_time;
@@ -86,6 +86,9 @@ public class PlaceOrderFragment extends Fragment {
         Double total = grandTotal + (double) deliveryCharge;
         binding.txtGrandTotal.setText("\u20b9" + String.format("%.2f", total));
         binding.btnPlaceOrder.setOnClickListener(v -> PlaceOrderData());
+
+        binding.txtViewOffers.setOnClickListener(v -> showBottomSheet());
+
         return binding.getRoot();
 
     }
@@ -169,4 +172,13 @@ public class PlaceOrderFragment extends Fragment {
     }
 
 
+    public void showBottomSheet() {
+        ActionBottomDialogFragment addPhotoBottomDialogFragment = ActionBottomDialogFragment.newInstance();
+        addPhotoBottomDialogFragment.show(getChildFragmentManager(), ActionBottomDialogFragment.TAG);
+    }
+
+    @Override
+    public void onItemClick(String item) {
+
+    }
 }

@@ -6,6 +6,7 @@ import com.waro.coin.model.CartResponse;
 import com.waro.coin.model.CategoriesResponse;
 import com.waro.coin.model.CitiesResponse;
 
+import com.waro.coin.model.CouponsResponse;
 import com.waro.coin.model.CustomerResponse;
 import com.waro.coin.model.ItemDetailsResponse;
 import com.waro.coin.model.ItemsListResponse;
@@ -99,4 +100,8 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("order-history")
     Call<OrderHistoryResponse> getOrderHistoryList(@Body JsonObject jsonObject);
+
+    @Headers("Content-Type: application/json")
+    @POST("coupon-details")
+    Call<CouponsResponse> getCouponDetailsList(@Body JsonObject jsonObject);
 }

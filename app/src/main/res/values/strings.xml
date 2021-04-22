@@ -68,6 +68,10 @@
     <string name="instructions_for_delivery">Instructions for Delivery</string>
     <string name="instructions">Instructions</string>
     <string name="no_connection">No network available, please check your WiFi or Data connection</string>
+    <string name="offers">Offers</string>
+    <string name="view_offers">View offers</string>
+    <string name="select_a_promo_code">Select a promo code</string>
+    <string name="apply">APPLY</string>
 
 
 </resources>

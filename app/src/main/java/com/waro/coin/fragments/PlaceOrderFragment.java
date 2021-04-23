@@ -118,7 +118,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
         binding.progressBar.setVisibility(View.VISIBLE);
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("customer_id", customerId);
-        jsonObject.addProperty("total_amt", grandTotal);
+        jsonObject.addProperty("total_amt", total_amt);
         jsonObject.addProperty("delivery_charges", deliveryCharge);
         jsonObject.addProperty("customer_comments", Objects.requireNonNull(binding.etComments.getText()).toString());
         jsonObject.addProperty("address_id", address_id);
@@ -200,14 +200,14 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
     }
 
     @Override
-    public void callbackMethod(CouponsResponse.CouponsBean date) {
+    public void callbackMethod(CouponsResponse.CouponsBean couponsBean) {
         addPhotoBottomDialogFragment.dismiss();
         binding.txtViewOffers.setText("Remove");
-        binding.txtPromoCode.setText(date.getCouponCode());
+        binding.txtPromoCode.setText(couponsBean.getCouponCode());
         binding.txtDiscount.setVisibility(View.VISIBLE);
-        binding.txtDiscount.setText("- "+"\u20b9"+"50");
+        binding.txtDiscount.setText("- "+"\u20b9"+couponsBean.getValue());
 
-        orderCalculation(50);
+        orderCalculation(Integer.parseInt(couponsBean.getValue()));
 
         binding.txtViewOffers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +221,8 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
                 }else {
                     showBottomSheet();
                 }
+
+
             }
         });
     }

@@ -23,6 +23,8 @@ import com.waro.coin.activities.HomeActivity;
 import com.waro.coin.databinding.FragmentPlaceorderBinding;
 import com.waro.coin.helper.UserSessionManager;
 import com.waro.coin.helper.Util;
+import com.waro.coin.interfaces.CouponInterface;
+import com.waro.coin.model.CouponsResponse;
 import com.waro.coin.model.PlaceOrderResponse;
 import com.waro.coin.network.ApiInterface;
 import com.waro.coin.network.RetrofitService;
@@ -42,17 +44,20 @@ import retrofit2.Response;
 import static com.waro.coin.network.RetrofitService.IMAGE_HOME_URL;
 
 
-public class PlaceOrderFragment extends Fragment implements ActionBottomDialogFragment.ItemClickListener{
+public class PlaceOrderFragment extends Fragment implements CouponInterface {
     private static final String TAG = "PlaceOrderFragment";
+    private CouponInterface callback;
     private FragmentPlaceorderBinding binding;
     String customerId, shop_id,date_time;
+    double total_amt;
     int grandTotal, itemCount, address_id, deliveryCharge;
+    ActionBottomDialogFragment addPhotoBottomDialogFragment;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPlaceorderBinding.inflate(inflater, container, false);
-
+        callback=this;
         UserSessionManager userSessionManager = new UserSessionManager(requireContext());
         HashMap<String, String> userDetails = userSessionManager.getUserDetails();
         customerId = userDetails.get("id");
@@ -79,18 +84,34 @@ public class PlaceOrderFragment extends Fragment implements ActionBottomDialogFr
         binding.actionLayout.badgeCart.setVisibility(View.GONE);
         binding.actionLayout.txtActionBarTitle.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-        binding.txtTotalCount.setText("" + itemCount);
-        binding.txtTotalItems.setText("\u20b9" + String.format("%.2f", (double) grandTotal));
-        binding.txtDeliveryPrice.setText("\u20b9" + String.format("%.2f", (double) deliveryCharge));
+        orderCalculation(0);
 
-        Double total = grandTotal + (double) deliveryCharge;
-        binding.txtGrandTotal.setText("\u20b9" + String.format("%.2f", total));
         binding.btnPlaceOrder.setOnClickListener(v -> PlaceOrderData());
 
         binding.txtViewOffers.setOnClickListener(v -> showBottomSheet());
 
+
         return binding.getRoot();
 
+    }
+
+    private void orderCalculation(int discountPrice) {
+        if (discountPrice==0){
+            binding.txtCouponPrice.setVisibility(View.GONE);
+            binding.txtCoupon.setVisibility(View.GONE);
+        }else {
+            binding.txtCouponPrice.setVisibility(View.VISIBLE);
+            binding.txtCoupon.setVisibility(View.VISIBLE);
+        }
+
+        binding.txtTotalCount.setText("" + itemCount);
+        binding.txtTotalItems.setText("\u20b9" + String.format("%.2f", (double) grandTotal));
+        binding.txtDeliveryPrice.setText("\u20b9" + String.format("%.2f", (double) deliveryCharge));
+
+
+        binding.txtCouponPrice.setText("-"+"\u20b9" + String.format("%.2f", (double) discountPrice));
+        total_amt = (grandTotal + (double) deliveryCharge)-discountPrice;
+        binding.txtGrandTotal.setText("\u20b9" + String.format("%.2f", total_amt));
     }
 
     private void PlaceOrderData() {
@@ -173,12 +194,36 @@ public class PlaceOrderFragment extends Fragment implements ActionBottomDialogFr
 
 
     public void showBottomSheet() {
-        ActionBottomDialogFragment addPhotoBottomDialogFragment = ActionBottomDialogFragment.newInstance();
+        addPhotoBottomDialogFragment = new ActionBottomDialogFragment(callback);
         addPhotoBottomDialogFragment.show(getChildFragmentManager(), ActionBottomDialogFragment.TAG);
+
     }
 
     @Override
-    public void onItemClick(String item) {
+    public void callbackMethod(CouponsResponse.CouponsBean date) {
+        addPhotoBottomDialogFragment.dismiss();
+        binding.txtViewOffers.setText("Remove");
+        binding.txtPromoCode.setText(date.getCouponCode());
+        binding.txtDiscount.setVisibility(View.VISIBLE);
+        binding.txtDiscount.setText("- "+"\u20b9"+"50");
 
+        orderCalculation(50);
+
+        binding.txtViewOffers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (binding.txtViewOffers.getText().toString().equalsIgnoreCase("Remove")){
+                     binding.txtPromoCode.setText(R.string.select_a_promo_code);
+                     binding.txtViewOffers.setText(R.string.view_offers);
+                     binding.txtDiscount.setVisibility(View.GONE);
+                     binding.txtDiscount.setText("0.00");
+                     orderCalculation(0);
+                }else {
+                    showBottomSheet();
+                }
+            }
+        });
     }
+
+
 }

@@ -72,6 +72,8 @@
     <string name="view_offers">View offers</string>
     <string name="select_a_promo_code">Select a promo code</string>
     <string name="apply">APPLY</string>
+    <string name="available_offers">Available Offers</string>
+    <string name="coupon_discount">Coupon Discount</string>
 
 
 </resources>

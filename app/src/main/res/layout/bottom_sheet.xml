@@ -12,16 +12,33 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/proxima_nova_regular"
-            android:text="Available Offers"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:padding="10dp"
-            android:layout_marginTop="5dp"/>
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgClose"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_close_24"/>
+
+            <TextView
+                android:layout_toEndOf="@+id/imgClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/proxima_nova_regular"
+                android:text="@string/available_offers"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"/>
+
+        </RelativeLayout>
+
 
         <View
             android:layout_width="match_parent"

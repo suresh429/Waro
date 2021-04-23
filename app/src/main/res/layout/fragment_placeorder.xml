@@ -167,37 +167,38 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <TextView
+                            android:id="@+id/txtPromoCode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:id="@+id/txtPromoCode"
                             android:fontFamily="@font/proxima_nova_regular"
                             android:text="@string/select_a_promo_code"
                             android:textColor="@color/black"
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/txtDiscount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/proxima_nova_regular"
                             android:gravity="end"
-                            android:id="@+id/txtDiscount"
                             android:text="-50.00"
-                            android:visibility="gone"
                             android:textColor="@color/colorGreen"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:visibility="gone" />
 
                         <TextView
+                            android:id="@+id/txtViewOffers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/proxima_nova_regular"
                             android:gravity="end"
-                            android:id="@+id/txtViewOffers"
                             android:text="@string/view_offers"
                             android:textColor="@color/colorPrimary"
                             android:textSize="13sp" />
@@ -287,11 +288,36 @@
                         android:text="@string/_12"
                         android:textSize="14sp" />
 
+                    <TextView
+                        android:id="@+id/txtCoupon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtDelivery"
+                        android:layout_marginTop="8dp"
+                        android:layout_toStartOf="@+id/txtGrandTotal"
+                        android:fontFamily="@font/proxima_nova_regular"
+                        android:text="@string/coupon_discount"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorRed"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtCouponPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtDeliveryPrice"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/proxima_nova_regular"
+                        android:text="@string/_12"
+                        android:textColor="@color/colorRed"
+                        android:textSize="14sp" />
+
                     <View
                         android:id="@+id/view"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_below="@+id/txtDelivery"
+                        android:layout_below="@+id/txtCoupon"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@color/divider" />

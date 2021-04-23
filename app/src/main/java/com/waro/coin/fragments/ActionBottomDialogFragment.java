@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,13 +19,12 @@ import com.waro.coin.R;
 import com.waro.coin.adapters.CouponsListAdapter;
 import com.waro.coin.helper.UserSessionManager;
 import com.waro.coin.helper.Util;
+import com.waro.coin.interfaces.CouponInterface;
 import com.waro.coin.model.CouponsResponse;
-import com.waro.coin.model.PlaceOrderResponse;
 import com.waro.coin.network.ApiInterface;
 import com.waro.coin.network.RetrofitService;
 
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,14 +32,18 @@ import retrofit2.Response;
 
 public class ActionBottomDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = "ActionBottomDialog";
+    private final CouponInterface callback;
     private ItemClickListener mListener;
     RecyclerView recyclerView;
     ProgressBar progressBar;
+    ImageView imgClose;
     String customerId;
     UserSessionManager userSessionManager;
-    public static ActionBottomDialogFragment newInstance() {
-        return new ActionBottomDialogFragment();
+
+    public ActionBottomDialogFragment(CouponInterface callback) {
+        this.callback=callback;
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -51,9 +54,12 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerCoupons);
         progressBar = view.findViewById(R.id.progressBar);
+        imgClose = view.findViewById(R.id.imgClose);
         userSessionManager=new UserSessionManager(getContext());
         customerId=userSessionManager.getUserDetails().get("id");
         couponsData();
+
+        imgClose.setOnClickListener(v -> dismiss());
 
     }
     @Override
@@ -69,7 +75,7 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-       // mListener = null;
+       //mListener = null;
     }
 
 
@@ -91,7 +97,7 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment {
                     progressBar.setVisibility(View.GONE);
 
                     List<CouponsResponse.CouponsBean> couponsBeanList = response.body().getCoupons();
-                    CouponsListAdapter adapter = new CouponsListAdapter(couponsBeanList,getContext());
+                    CouponsListAdapter adapter = new CouponsListAdapter(couponsBeanList,getContext(),callback);
                     recyclerView.setAdapter(adapter);
 
 

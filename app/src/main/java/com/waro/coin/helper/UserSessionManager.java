@@ -20,7 +20,7 @@ public class UserSessionManager {
     int PRIVATE_MODE = 0;
 
     // Shared preferences file name
-    private static final String PREF_NAME = "buddyBasket";
+    private static final String PREF_NAME = "warocoin";
 
     // All Shared Preferences Keys
     public static final String KEY_IS_LOGGED_IN = "isLoggedIn";

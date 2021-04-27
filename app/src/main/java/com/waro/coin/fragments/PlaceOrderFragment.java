@@ -221,8 +221,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
                 }else {
                     showBottomSheet();
                 }
-
-
+                
             }
         });
     }

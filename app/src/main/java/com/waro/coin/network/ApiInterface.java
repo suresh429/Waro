@@ -2,6 +2,7 @@ package com.waro.coin.network;
 
 import com.waro.coin.model.AddressResponse;
 import com.waro.coin.model.BannerResponse;
+import com.waro.coin.model.BaseResponse;
 import com.waro.coin.model.CartResponse;
 import com.waro.coin.model.CategoriesResponse;
 import com.waro.coin.model.CitiesResponse;
@@ -104,4 +105,8 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("coupon-details")
     Call<CouponsResponse> getCouponDetailsList(@Body JsonObject jsonObject);
+
+    @Headers("Content-Type: application/json")
+    @POST("apply-coupon")
+    Call<BaseResponse> applyCoupon(@Body JsonObject jsonObject);
 }

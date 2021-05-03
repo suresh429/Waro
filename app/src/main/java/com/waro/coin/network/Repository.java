@@ -517,13 +517,11 @@ public class Repository {
             @Override
             public void onResponse(@NotNull Call<OrderHistoryResponse> call, @NotNull Response<OrderHistoryResponse> response) {
                 if (response.isSuccessful()) {
-
                     progressbarObservable.setValue(false);
                     homeData.setValue(response.body());
                 } else {
                     progressbarObservable.setValue(false);
                     toastMessageObserver.setValue("Something unexpected happened to our request: " + response.message()); // Whenever you want to show toast use setValue.
-
                 }
             }
 

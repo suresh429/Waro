@@ -67,6 +67,12 @@ public class OrderSummaryFragment extends Fragment {
         binding.txtItemTotalPrice.setText("\u20b9"+ordersBeanList.get(position).getTotalAmt());
         binding.txtDeliveryPrice.setText("\u20b9"+ ordersBeanList.get(position).getDeliveryCharges());
 
+        if (ordersBeanList.get(position).getDiscount_amt() != null) {
+            binding.txtDiscountPrice.setText("\u20b9" + ordersBeanList.get(position).getDiscount_amt());
+        }else {
+            binding.txtDiscountPrice.setText("\u20b9" + "0.00");
+        }
+
         double total = Double.parseDouble(ordersBeanList.get(position).getTotalAmt()) + Double.parseDouble(ordersBeanList.get(position).getDeliveryCharges());
         binding.txtGrandTotalAmount.setText("\u20b9"+String.format("%.2f", total));
         binding.txtOrderNumber.setText(""+ordersBeanList.get(position).getId());

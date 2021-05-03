@@ -62,6 +62,8 @@ public class OrderHistoryResponse implements Parcelable {
         private int id;
         @SerializedName("customer_id")
         private String customerId;
+        @SerializedName("discount_amt")
+        private String discount_amt;
         @SerializedName("total_amt")
         private String totalAmt;
         @SerializedName("address_id")
@@ -93,6 +95,7 @@ public class OrderHistoryResponse implements Parcelable {
         protected OrdersBean(Parcel in) {
             id = in.readInt();
             customerId = in.readString();
+            discount_amt = in.readString();
             totalAmt = in.readString();
             addressId = in.readString();
             shopId = in.readString();
@@ -132,6 +135,14 @@ public class OrderHistoryResponse implements Parcelable {
 
         public void setCustomerId(String customerId) {
             this.customerId = customerId;
+        }
+
+        public String getDiscount_amt() {
+            return discount_amt;
+        }
+
+        public void setDiscount_amt(String discount_amt) {
+            this.discount_amt = discount_amt;
         }
 
         public String getTotalAmt() {

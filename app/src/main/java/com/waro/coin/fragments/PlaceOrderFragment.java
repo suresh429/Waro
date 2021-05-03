@@ -24,6 +24,7 @@ import com.waro.coin.databinding.FragmentPlaceorderBinding;
 import com.waro.coin.helper.UserSessionManager;
 import com.waro.coin.helper.Util;
 import com.waro.coin.interfaces.CouponInterface;
+import com.waro.coin.model.BaseResponse;
 import com.waro.coin.model.CouponsResponse;
 import com.waro.coin.model.PlaceOrderResponse;
 import com.waro.coin.network.ApiInterface;
@@ -50,7 +51,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
     private FragmentPlaceorderBinding binding;
     String customerId, shop_id,date_time;
     double total_amt;
-    int grandTotal, itemCount, address_id, deliveryCharge;
+    int grandTotal, itemCount, address_id, deliveryCharge,discountAmount,couponId;
     ActionBottomDialogFragment addPhotoBottomDialogFragment;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
@@ -84,7 +85,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
         binding.actionLayout.badgeCart.setVisibility(View.GONE);
         binding.actionLayout.txtActionBarTitle.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-        orderCalculation(0);
+        orderCalculation(0, 0);
 
         binding.btnPlaceOrder.setOnClickListener(v -> PlaceOrderData());
 
@@ -95,7 +96,15 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
 
     }
 
-    private void orderCalculation(int discountPrice) {
+    private void orderCalculation(int discountPrice, int id) {
+
+        if (id != 0){
+            couponId = 0;
+        }else {
+            couponId = id;
+        }
+
+        discountAmount = discountPrice;
         if (discountPrice==0){
             binding.txtCouponPrice.setVisibility(View.GONE);
             binding.txtCoupon.setVisibility(View.GONE);
@@ -119,6 +128,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("customer_id", customerId);
         jsonObject.addProperty("total_amt", total_amt);
+        jsonObject.addProperty("discount_amt", discountAmount);
         jsonObject.addProperty("delivery_charges", deliveryCharge);
         jsonObject.addProperty("customer_comments", Objects.requireNonNull(binding.etComments.getText()).toString());
         jsonObject.addProperty("address_id", address_id);
@@ -134,6 +144,11 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
 
                     assert response.body() != null;
                     displayAlert("Success", response.body().getMsg());
+
+                    if (couponId != 0){
+                        ApplyCoupon();
+                    }
+
 
                 } else if (response.errorBody() != null) {
                     binding.progressBar.setVisibility(View.GONE);
@@ -151,9 +166,40 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
         });
     }
 
+    private void ApplyCoupon() {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("coupon_id", couponId);
+        jsonObject.addProperty("customer_id", customerId);
+        Call<BaseResponse> call = RetrofitService.createService(ApiInterface.class, requireContext()).applyCoupon(jsonObject);
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<BaseResponse> call, @NonNull Response<BaseResponse> response) {
+
+                if (response.isSuccessful()) {
+                    binding.progressBar.setVisibility(View.GONE);
+
+                    assert response.body() != null;
+
+
+                } else if (response.errorBody() != null) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    assert response.body() != null;
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<BaseResponse> call, @NonNull Throwable t) {
+                binding.progressBar.setVisibility(View.GONE);
+                Util.snackBar(requireView().getRootView(), t.getMessage(), Color.RED);
+            }
+        });
+    }
+
 
     private void displayAlert(@NonNull String alertTitle, @Nullable String message) {
-
 
         ViewGroup viewGroup = binding.getRoot().findViewById(android.R.id.content);
 
@@ -207,7 +253,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
         binding.txtDiscount.setVisibility(View.VISIBLE);
         binding.txtDiscount.setText("- "+"\u20b9"+couponsBean.getValue());
 
-        orderCalculation(Integer.parseInt(couponsBean.getValue()));
+        orderCalculation(Integer.parseInt(couponsBean.getValue()),couponsBean.getId());
 
         binding.txtViewOffers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +263,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
                      binding.txtViewOffers.setText(R.string.view_offers);
                      binding.txtDiscount.setVisibility(View.GONE);
                      binding.txtDiscount.setText("0.00");
-                     orderCalculation(0);
+                     orderCalculation(0, 0);
                 }else {
                     showBottomSheet();
                 }

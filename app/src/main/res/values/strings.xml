@@ -74,6 +74,7 @@
     <string name="apply">APPLY</string>
     <string name="available_offers">Available Offers</string>
     <string name="coupon_discount">Coupon Discount</string>
+    <string name="discount_amount">Discount Amount</string>
 
 
 </resources>

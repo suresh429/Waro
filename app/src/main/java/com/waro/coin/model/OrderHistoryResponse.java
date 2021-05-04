@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class OrderHistoryResponse implements Parcelable {
 
-
     @SerializedName("status")
     private String status;
     @SerializedName("orders")
@@ -57,56 +56,57 @@ public class OrderHistoryResponse implements Parcelable {
         dest.writeString(status);
     }
 
-    public static class OrdersBean implements Parcelable {
+    public static class OrdersBean implements Parcelable{
         @SerializedName("id")
         private int id;
         @SerializedName("customer_id")
         private String customerId;
+        @SerializedName("delivery_charges")
+        private String deliveryCharges;
         @SerializedName("discount_amt")
-        private String discount_amt;
+        private String discountAmt;
         @SerializedName("total_amt")
         private String totalAmt;
         @SerializedName("address_id")
         private String addressId;
         @SerializedName("shop_id")
         private String shopId;
-        @SerializedName("delivery_charges")
-        private String deliveryCharges;
+        @SerializedName("coupon_id")
+        private String couponId;
         @SerializedName("customer_comments")
         private String customerComments;
         @SerializedName("status")
         private String status;
         @SerializedName("comments")
         private String comments;
-        @SerializedName("date_time")
-        private String date_time;
         @SerializedName("created_at")
         private String createdAt;
         @SerializedName("updated_at")
         private String updatedAt;
+        @SerializedName("date_time")
+        private String dateTime;
         @SerializedName("address")
         private AddressBean address;
         @SerializedName("shop")
         private ShopBean shop;
+        /*@SerializedName("coupon")
+        private CouponBean coupon;*/
         @SerializedName("order_item")
         private ArrayList<OrderItemBean> orderItem;
-
 
         protected OrdersBean(Parcel in) {
             id = in.readInt();
             customerId = in.readString();
-            discount_amt = in.readString();
+            deliveryCharges = in.readString();
             totalAmt = in.readString();
             addressId = in.readString();
             shopId = in.readString();
-            deliveryCharges = in.readString();
-            customerComments = in.readString();
+            couponId = in.readString();
             status = in.readString();
-            comments = in.readString();
-            date_time = in.readString();
             createdAt = in.readString();
             updatedAt = in.readString();
-            orderItem = in.createTypedArrayList(OrderItemBean.CREATOR);
+            dateTime = in.readString();
+            address = in.readParcelable(AddressBean.class.getClassLoader());
         }
 
         public static final Creator<OrdersBean> CREATOR = new Creator<OrdersBean>() {
@@ -137,12 +137,20 @@ public class OrderHistoryResponse implements Parcelable {
             this.customerId = customerId;
         }
 
-        public String getDiscount_amt() {
-            return discount_amt;
+        public String getDeliveryCharges() {
+            return deliveryCharges;
         }
 
-        public void setDiscount_amt(String discount_amt) {
-            this.discount_amt = discount_amt;
+        public void setDeliveryCharges(String deliveryCharges) {
+            this.deliveryCharges = deliveryCharges;
+        }
+
+        public String getDiscountAmt() {
+            return discountAmt;
+        }
+
+        public void setDiscountAmt(String discountAmt) {
+            this.discountAmt = discountAmt;
         }
 
         public String getTotalAmt() {
@@ -169,21 +177,12 @@ public class OrderHistoryResponse implements Parcelable {
             this.shopId = shopId;
         }
 
-        public String getDeliveryCharges() {
-            return deliveryCharges;
+        public String getCouponId() {
+            return couponId;
         }
 
-        public void setDeliveryCharges(String deliveryCharges) {
-            this.deliveryCharges = deliveryCharges;
-        }
-
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
+        public void setCouponId(String couponId) {
+            this.couponId = couponId;
         }
 
         public String getCustomerComments() {
@@ -194,20 +193,20 @@ public class OrderHistoryResponse implements Parcelable {
             this.customerComments = customerComments;
         }
 
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
         public String getComments() {
             return comments;
         }
 
         public void setComments(String comments) {
             this.comments = comments;
-        }
-
-        public String getDate_time() {
-            return date_time;
-        }
-
-        public void setDate_time(String date_time) {
-            this.date_time = date_time;
         }
 
         public String getCreatedAt() {
@@ -226,6 +225,14 @@ public class OrderHistoryResponse implements Parcelable {
             this.updatedAt = updatedAt;
         }
 
+        public String getDateTime() {
+            return dateTime;
+        }
+
+        public void setDateTime(String dateTime) {
+            this.dateTime = dateTime;
+        }
+
         public AddressBean getAddress() {
             return address;
         }
@@ -242,6 +249,14 @@ public class OrderHistoryResponse implements Parcelable {
             this.shop = shop;
         }
 
+       /* public CouponBean getCoupon() {
+            return coupon;
+        }
+
+        public void setCoupon(CouponBean coupon) {
+            this.coupon = coupon;
+        }
+*/
         public ArrayList<OrderItemBean> getOrderItem() {
             return orderItem;
         }
@@ -259,15 +274,19 @@ public class OrderHistoryResponse implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(id);
             dest.writeString(customerId);
+            dest.writeString(deliveryCharges);
             dest.writeString(totalAmt);
             dest.writeString(addressId);
             dest.writeString(shopId);
+            dest.writeString(couponId);
             dest.writeString(status);
             dest.writeString(createdAt);
             dest.writeString(updatedAt);
+            dest.writeString(dateTime);
+            dest.writeParcelable(address, flags);
         }
 
-        public static class AddressBean {
+        public static class AddressBean implements Parcelable {
             @SerializedName("id")
             private int id;
             @SerializedName("name")
@@ -288,6 +307,31 @@ public class OrderHistoryResponse implements Parcelable {
             private String updatedAt;
             @SerializedName("created_at")
             private String createdAt;
+
+            protected AddressBean(Parcel in) {
+                id = in.readInt();
+                name = in.readString();
+                phone = in.readString();
+                customerId = in.readString();
+                addr1 = in.readString();
+                addr2 = in.readString();
+                pincode = in.readString();
+                landmark = in.readString();
+                updatedAt = in.readString();
+                createdAt = in.readString();
+            }
+
+            public static final Creator<AddressBean> CREATOR = new Creator<AddressBean>() {
+                @Override
+                public AddressBean createFromParcel(Parcel in) {
+                    return new AddressBean(in);
+                }
+
+                @Override
+                public AddressBean[] newArray(int size) {
+                    return new AddressBean[size];
+                }
+            };
 
             public int getId() {
                 return id;
@@ -368,9 +412,28 @@ public class OrderHistoryResponse implements Parcelable {
             public void setCreatedAt(String createdAt) {
                 this.createdAt = createdAt;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(id);
+                dest.writeString(name);
+                dest.writeString(phone);
+                dest.writeString(customerId);
+                dest.writeString(addr1);
+                dest.writeString(addr2);
+                dest.writeString(pincode);
+                dest.writeString(landmark);
+                dest.writeString(updatedAt);
+                dest.writeString(createdAt);
+            }
         }
 
-        public static class ShopBean {
+        public static class ShopBean implements Parcelable{
             @SerializedName("id")
             private int id;
             @SerializedName("shopname")
@@ -390,11 +453,13 @@ public class OrderHistoryResponse implements Parcelable {
             @SerializedName("phone")
             private String phone;
             @SerializedName("website")
-            private Object website;
+            private String website;
             @SerializedName("opentime")
             private String opentime;
             @SerializedName("closetime")
             private String closetime;
+            @SerializedName("delivery_charges")
+            private String deliveryCharges;
             @SerializedName("image")
             private String image;
             @SerializedName("status")
@@ -403,6 +468,38 @@ public class OrderHistoryResponse implements Parcelable {
             private String createdAt;
             @SerializedName("updated_at")
             private String updatedAt;
+
+            protected ShopBean(Parcel in) {
+                id = in.readInt();
+                shopname = in.readString();
+                slug = in.readString();
+                description = in.readString();
+                stateId = in.readString();
+                cityId = in.readString();
+                categoryId = in.readString();
+                address = in.readString();
+                phone = in.readString();
+                website = in.readString();
+                opentime = in.readString();
+                closetime = in.readString();
+                deliveryCharges = in.readString();
+                image = in.readString();
+                status = in.readString();
+                createdAt = in.readString();
+                updatedAt = in.readString();
+            }
+
+            public static final Creator<ShopBean> CREATOR = new Creator<ShopBean>() {
+                @Override
+                public ShopBean createFromParcel(Parcel in) {
+                    return new ShopBean(in);
+                }
+
+                @Override
+                public ShopBean[] newArray(int size) {
+                    return new ShopBean[size];
+                }
+            };
 
             public int getId() {
                 return id;
@@ -476,11 +573,11 @@ public class OrderHistoryResponse implements Parcelable {
                 this.phone = phone;
             }
 
-            public Object getWebsite() {
+            public String getWebsite() {
                 return website;
             }
 
-            public void setWebsite(Object website) {
+            public void setWebsite(String website) {
                 this.website = website;
             }
 
@@ -498,6 +595,14 @@ public class OrderHistoryResponse implements Parcelable {
 
             public void setClosetime(String closetime) {
                 this.closetime = closetime;
+            }
+
+            public String getDeliveryCharges() {
+                return deliveryCharges;
+            }
+
+            public void setDeliveryCharges(String deliveryCharges) {
+                this.deliveryCharges = deliveryCharges;
             }
 
             public String getImage() {
@@ -531,7 +636,144 @@ public class OrderHistoryResponse implements Parcelable {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(id);
+                dest.writeString(shopname);
+                dest.writeString(slug);
+                dest.writeString(description);
+                dest.writeString(stateId);
+                dest.writeString(cityId);
+                dest.writeString(categoryId);
+                dest.writeString(address);
+                dest.writeString(phone);
+                dest.writeString(website);
+                dest.writeString(opentime);
+                dest.writeString(closetime);
+                dest.writeString(deliveryCharges);
+                dest.writeString(image);
+                dest.writeString(status);
+                dest.writeString(createdAt);
+                dest.writeString(updatedAt);
+            }
         }
+
+       /* public static class CouponBean implements Parcelable {
+            @SerializedName("id")
+            private int id;
+            @SerializedName("coupon_code")
+            private String couponCode;
+            @SerializedName("type")
+            private String type;
+            @SerializedName("value")
+            private String value;
+            @SerializedName("status")
+            private String status;
+            @SerializedName("created_at")
+            private String createdAt;
+            @SerializedName("updated_at")
+            private String updatedAt;
+
+            protected CouponBean(Parcel in) {
+                id = in.readInt();
+                couponCode = in.readString();
+                type = in.readString();
+                value = in.readString();
+                status = in.readString();
+                createdAt = in.readString();
+                updatedAt = in.readString();
+            }
+
+            public static final Creator<CouponBean> CREATOR = new Creator<CouponBean>() {
+                @Override
+                public CouponBean createFromParcel(Parcel in) {
+                    return new CouponBean(in);
+                }
+
+                @Override
+                public CouponBean[] newArray(int size) {
+                    return new CouponBean[size];
+                }
+            };
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getCouponCode() {
+                return couponCode;
+            }
+
+            public void setCouponCode(String couponCode) {
+                this.couponCode = couponCode;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(id);
+                dest.writeString(couponCode);
+                dest.writeString(type);
+                dest.writeString(value);
+                dest.writeString(status);
+                dest.writeString(createdAt);
+                dest.writeString(updatedAt);
+            }
+        }*/
 
         public static class OrderItemBean implements Parcelable {
             @SerializedName("id")
@@ -665,7 +907,7 @@ public class OrderHistoryResponse implements Parcelable {
                 dest.writeString(updatedAt);
             }
 
-            public static class ItemBean {
+            public static class ItemBean implements Parcelable {
                 @SerializedName("id")
                 private int id;
                 @SerializedName("itemname")
@@ -694,6 +936,35 @@ public class OrderHistoryResponse implements Parcelable {
                 private String createdAt;
                 @SerializedName("updated_at")
                 private String updatedAt;
+
+                protected ItemBean(Parcel in) {
+                    id = in.readInt();
+                    itemname = in.readString();
+                    slug = in.readString();
+                    qty = in.readString();
+                    shopId = in.readString();
+                    categoryId = in.readString();
+                    subcategoryId = in.readString();
+                    price = in.readString();
+                    description = in.readString();
+                    choices = in.readString();
+                    image = in.readString();
+                    status = in.readString();
+                    createdAt = in.readString();
+                    updatedAt = in.readString();
+                }
+
+                public static final Creator<ItemBean> CREATOR = new Creator<ItemBean>() {
+                    @Override
+                    public ItemBean createFromParcel(Parcel in) {
+                        return new ItemBean(in);
+                    }
+
+                    @Override
+                    public ItemBean[] newArray(int size) {
+                        return new ItemBean[size];
+                    }
+                };
 
                 public int getId() {
                     return id;
@@ -805,6 +1076,29 @@ public class OrderHistoryResponse implements Parcelable {
 
                 public void setUpdatedAt(String updatedAt) {
                     this.updatedAt = updatedAt;
+                }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeInt(id);
+                    dest.writeString(itemname);
+                    dest.writeString(slug);
+                    dest.writeString(qty);
+                    dest.writeString(shopId);
+                    dest.writeString(categoryId);
+                    dest.writeString(subcategoryId);
+                    dest.writeString(price);
+                    dest.writeString(description);
+                    dest.writeString(choices);
+                    dest.writeString(image);
+                    dest.writeString(status);
+                    dest.writeString(createdAt);
+                    dest.writeString(updatedAt);
                 }
             }
         }

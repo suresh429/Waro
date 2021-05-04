@@ -2,6 +2,7 @@ package com.waro.coin.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import static com.waro.coin.network.RetrofitService.IMAGE_HOME_URL;
 
 public class OrderSummaryFragment extends Fragment {
 
+    private static final String TAG = "OrderSummaryFragment";
     OrderHistoryViewModel orderHistoryViewModel;
     FragmentOrderSummaryBinding binding;
     OrderItemListAdapter adapter;
@@ -40,6 +42,7 @@ public class OrderSummaryFragment extends Fragment {
         binding.actionLayout.txtActionBarTitle.setText("Order Summary");
         binding.actionLayout.badgeCart.setVisibility(View.GONE);
         binding.actionLayout.txtActionBarTitle.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+
 
 
         Bundle bundle = getArguments();
@@ -64,25 +67,41 @@ public class OrderSummaryFragment extends Fragment {
                 .into(binding.imgShop);
 
         binding.txtOrderStatus.setText("This Order was "+ordersBeanList.get(position).getStatus());
-        binding.txtItemTotalPrice.setText("\u20b9"+ordersBeanList.get(position).getTotalAmt());
+
+        double itemTotal = Double.parseDouble(ordersBeanList.get(position).getTotalAmt()) - (Double.parseDouble(ordersBeanList.get(position).getDeliveryCharges()) - Double.parseDouble(ordersBeanList.get(position).getDiscountAmt()));
+        binding.txtItemTotalPrice.setText("\u20b9"+String.format("%.2f",itemTotal));
         binding.txtDeliveryPrice.setText("\u20b9"+ ordersBeanList.get(position).getDeliveryCharges());
 
-        if (ordersBeanList.get(position).getDiscount_amt() != null) {
-            binding.txtDiscountPrice.setText("\u20b9" + ordersBeanList.get(position).getDiscount_amt());
+        if (ordersBeanList.get(position).getDiscountAmt() != null) {
+            binding.txtDiscountPrice.setText("-"+"\u20b9" + ordersBeanList.get(position).getDiscountAmt());
         }else {
             binding.txtDiscountPrice.setText("\u20b9" + "0.00");
         }
 
-        double total = Double.parseDouble(ordersBeanList.get(position).getTotalAmt()) + Double.parseDouble(ordersBeanList.get(position).getDeliveryCharges());
-        binding.txtGrandTotalAmount.setText("\u20b9"+String.format("%.2f", total));
+        if ( !ordersBeanList.get(position).getCouponId().equalsIgnoreCase("0")) {
+            binding.txtCouponCode.setText(ordersBeanList.get(position).getCouponId());
+        }else {
+            binding.txtCouponCode.setText("No Coupon Applied");
+        }
+        binding.txtGrandTotalAmount.setText("\u20b9"+ ordersBeanList.get(position).getTotalAmt());
         binding.txtOrderNumber.setText(""+ordersBeanList.get(position).getId());
         binding.txtOrderMode.setText("Cash on Delivery");
-        binding.txtOrderPhone.setText(ordersBeanList.get(position).getAddress().getPhone());
-        binding.txtOrderAddress.setText(ordersBeanList.get(position).getAddress().getAddr1()+","+
-                ordersBeanList.get(position).getAddress().getAddr2()+","+
-                ordersBeanList.get(position).getAddress().getLandmark()+","+
-                ordersBeanList.get(position).getAddress().getPincode());
+
+        Log.d(TAG, "onCreateView: "+ordersBeanList.get(position).getAddress());
+        if(ordersBeanList.get(position).getAddress() != null ){
+            binding.txtOrderPhone.setText(""+ordersBeanList.get(position).getAddress().getPhone());
+            binding.txtOrderAddress.setText(ordersBeanList.get(position).getAddress().getAddr1()+","+
+                    ordersBeanList.get(position).getAddress().getAddr2()+","+
+                    ordersBeanList.get(position).getAddress().getLandmark()+","+
+                    ordersBeanList.get(position).getAddress().getPincode());
+        }else {
+            binding.txtOrderPhone.setText("----------------");
+            binding.txtOrderAddress.setText("---------------");
+        }
+
+
 
         return binding.getRoot();
     }
+
 }

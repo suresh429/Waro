@@ -190,6 +190,36 @@
                 android:padding="5dp">
 
                 <TextView
+                    android:id="@+id/txtCoupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/proxima_nova_regular"
+                    android:text="@string/coupon_applied" />
+
+
+                <TextView
+                    android:id="@+id/txtCouponCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/proxima_nova_regular"
+                    android:text="TEST" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <TextView
                     android:id="@+id/txtDiscount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

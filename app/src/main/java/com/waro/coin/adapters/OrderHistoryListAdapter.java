@@ -45,7 +45,7 @@ public class OrderHistoryListAdapter extends RecyclerView.Adapter<OrderHistoryLi
 
 
         holder.rowItemBinding.txtAmount.setText("\u20b9"+modelList.get(position).getTotalAmt());
-        holder.rowItemBinding.txtDate.setText(modelList.get(position).getDate_time());
+        holder.rowItemBinding.txtDate.setText(modelList.get(position).getDateTime());
         Glide.with(context)
                 .load(IMAGE_HOME_URL+modelList.get(position).getShop().getImage())
                 .error(R.drawable.placeholder)

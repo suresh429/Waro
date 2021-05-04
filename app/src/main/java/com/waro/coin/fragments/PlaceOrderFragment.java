@@ -49,16 +49,16 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
     private static final String TAG = "PlaceOrderFragment";
     private CouponInterface callback;
     private FragmentPlaceorderBinding binding;
-    String customerId, shop_id,date_time;
+    String customerId, shop_id, date_time;
     double total_amt;
-    int grandTotal, itemCount, address_id, deliveryCharge,discountAmount,couponId;
+    int grandTotal, itemCount, address_id, deliveryCharge, discountAmount, couponId;
     ActionBottomDialogFragment addPhotoBottomDialogFragment;
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPlaceorderBinding.inflate(inflater, container, false);
-        callback=this;
+        callback = this;
         UserSessionManager userSessionManager = new UserSessionManager(requireContext());
         HashMap<String, String> userDetails = userSessionManager.getUserDetails();
         customerId = userDetails.get("id");
@@ -72,7 +72,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
 
         date_time = new SimpleDateFormat("MMM dd, yyyy HH:mm a", Locale.getDefault()).format(new Date());
 
-        Log.d(TAG, "onCreateView: "+date_time);
+        Log.d(TAG, "onCreateView: " + date_time);
         binding.txtShopName.setText(userSessionManager.getShopDetails().get("shopName"));
         binding.txtAddreess.setText(userSessionManager.getShopDetails().get("shopLocation"));
         binding.txtTime.setText(userSessionManager.getShopDetails().get("shopOpenTime") + " - " + userSessionManager.getShopDetails().get("shopCloseTime"));
@@ -98,17 +98,15 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
 
     private void orderCalculation(int discountPrice, int id) {
 
-        if (id != 0){
-            couponId = 0;
-        }else {
-            couponId = id;
-        }
+
+        couponId = id;
+
 
         discountAmount = discountPrice;
-        if (discountPrice==0){
+        if (discountPrice == 0) {
             binding.txtCouponPrice.setVisibility(View.GONE);
             binding.txtCoupon.setVisibility(View.GONE);
-        }else {
+        } else {
             binding.txtCouponPrice.setVisibility(View.VISIBLE);
             binding.txtCoupon.setVisibility(View.VISIBLE);
         }
@@ -118,8 +116,8 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
         binding.txtDeliveryPrice.setText("\u20b9" + String.format("%.2f", (double) deliveryCharge));
 
 
-        binding.txtCouponPrice.setText("-"+"\u20b9" + String.format("%.2f", (double) discountPrice));
-        total_amt = (grandTotal + (double) deliveryCharge)-discountPrice;
+        binding.txtCouponPrice.setText("-" + "\u20b9" + String.format("%.2f", (double) discountPrice));
+        total_amt = (grandTotal + (double) deliveryCharge) - discountPrice;
         binding.txtGrandTotal.setText("\u20b9" + String.format("%.2f", total_amt));
     }
 
@@ -134,6 +132,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
         jsonObject.addProperty("address_id", address_id);
         jsonObject.addProperty("shop_id", shop_id);
         jsonObject.addProperty("date_time", date_time);
+        jsonObject.addProperty("coupon_id", couponId);
         Call<PlaceOrderResponse> call = RetrofitService.createService(ApiInterface.class, requireContext()).getPlaceOrderList(jsonObject);
         call.enqueue(new Callback<PlaceOrderResponse>() {
             @Override
@@ -145,7 +144,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
                     assert response.body() != null;
                     displayAlert("Success", response.body().getMsg());
 
-                    if (couponId != 0){
+                    if (couponId != 0) {
                         ApplyCoupon();
                     }
 
@@ -251,23 +250,23 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
         binding.txtViewOffers.setText("Remove");
         binding.txtPromoCode.setText(couponsBean.getCouponCode());
         binding.txtDiscount.setVisibility(View.VISIBLE);
-        binding.txtDiscount.setText("- "+"\u20b9"+couponsBean.getValue());
+        binding.txtDiscount.setText("- " + "\u20b9" + couponsBean.getValue());
 
-        orderCalculation(Integer.parseInt(couponsBean.getValue()),couponsBean.getId());
+        orderCalculation(Integer.parseInt(couponsBean.getValue()), couponsBean.getId());
 
         binding.txtViewOffers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (binding.txtViewOffers.getText().toString().equalsIgnoreCase("Remove")){
-                     binding.txtPromoCode.setText(R.string.select_a_promo_code);
-                     binding.txtViewOffers.setText(R.string.view_offers);
-                     binding.txtDiscount.setVisibility(View.GONE);
-                     binding.txtDiscount.setText("0.00");
-                     orderCalculation(0, 0);
-                }else {
+                if (binding.txtViewOffers.getText().toString().equalsIgnoreCase("Remove")) {
+                    binding.txtPromoCode.setText(R.string.select_a_promo_code);
+                    binding.txtViewOffers.setText(R.string.view_offers);
+                    binding.txtDiscount.setVisibility(View.GONE);
+                    binding.txtDiscount.setText("0.00");
+                    orderCalculation(0, 0);
+                } else {
                     showBottomSheet();
                 }
-                
+
             }
         });
     }

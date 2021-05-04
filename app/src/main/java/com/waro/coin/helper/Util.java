@@ -27,7 +27,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 public class Util {
 
     public static void snackBar(View view, String message, int color) {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
         // snackbar.setAction("RETRY", view1 -> Log.d(TAG, "onClick: "+"click"));
         //snackbar.setActionTextColor(Color.RED);
         View sbView = snackbar.getView();

@@ -79,7 +79,7 @@ public class OrderSummaryFragment extends Fragment {
         }
 
         if ( !ordersBeanList.get(position).getCouponId().equalsIgnoreCase("0")) {
-            binding.txtCouponCode.setText(ordersBeanList.get(position).getCouponId());
+            binding.txtCouponCode.setText(ordersBeanList.get(position).getCoupon().getCouponCode());
         }else {
             binding.txtCouponCode.setText("No Coupon Applied");
         }
@@ -87,7 +87,7 @@ public class OrderSummaryFragment extends Fragment {
         binding.txtOrderNumber.setText(""+ordersBeanList.get(position).getId());
         binding.txtOrderMode.setText("Cash on Delivery");
 
-        Log.d(TAG, "onCreateView: "+ordersBeanList.get(position).getAddress());
+
         if(ordersBeanList.get(position).getAddress() != null ){
             binding.txtOrderPhone.setText(""+ordersBeanList.get(position).getAddress().getPhone());
             binding.txtOrderAddress.setText(ordersBeanList.get(position).getAddress().getAddr1()+","+

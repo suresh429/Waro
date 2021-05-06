@@ -89,8 +89,8 @@ public class OrderHistoryResponse implements Parcelable {
         private AddressBean address;
         @SerializedName("shop")
         private ShopBean shop;
-        /*@SerializedName("coupon")
-        private CouponBean coupon;*/
+        @SerializedName("coupon")
+        private CouponBean coupon;
         @SerializedName("order_item")
         private ArrayList<OrderItemBean> orderItem;
 
@@ -249,14 +249,13 @@ public class OrderHistoryResponse implements Parcelable {
             this.shop = shop;
         }
 
-       /* public CouponBean getCoupon() {
+        public CouponBean getCoupon() {
             return coupon;
         }
 
         public void setCoupon(CouponBean coupon) {
             this.coupon = coupon;
         }
-*/
         public ArrayList<OrderItemBean> getOrderItem() {
             return orderItem;
         }
@@ -664,7 +663,7 @@ public class OrderHistoryResponse implements Parcelable {
             }
         }
 
-       /* public static class CouponBean implements Parcelable {
+        public static class CouponBean implements Parcelable {
             @SerializedName("id")
             private int id;
             @SerializedName("coupon_code")
@@ -773,7 +772,7 @@ public class OrderHistoryResponse implements Parcelable {
                 dest.writeString(createdAt);
                 dest.writeString(updatedAt);
             }
-        }*/
+        }
 
         public static class OrderItemBean implements Parcelable {
             @SerializedName("id")

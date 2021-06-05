@@ -31,6 +31,7 @@
                 android:layout_marginEnd="5dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="2dp"
+                android:visibility="gone"
                 app:cardUseCompatPadding="true">
 
                 <com.denzcoskun.imageslider.ImageSlider
@@ -38,9 +39,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     app:iss_auto_cycle="true"
-                    app:iss_delay="10"
+                    app:iss_delay="40"
                     app:iss_error_image="@drawable/placeholder"
-                    app:iss_period="1000"
+                    app:iss_period="4000"
                     app:iss_placeholder="@drawable/placeholder"
                     app:iss_selected_dot="@drawable/red_selected_dot"
                     app:iss_unselected_dot="@drawable/default_unselected_dot" />

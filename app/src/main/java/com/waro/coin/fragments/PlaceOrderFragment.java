@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -98,10 +99,7 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
 
     private void orderCalculation(int discountPrice, int id) {
 
-
         couponId = id;
-
-
         discountAmount = discountPrice;
         if (discountPrice == 0) {
             binding.txtCouponPrice.setVisibility(View.GONE);
@@ -246,29 +244,36 @@ public class PlaceOrderFragment extends Fragment implements CouponInterface {
 
     @Override
     public void callbackMethod(CouponsResponse.CouponsBean couponsBean) {
-        addPhotoBottomDialogFragment.dismiss();
-        binding.txtViewOffers.setText("Remove");
-        binding.txtPromoCode.setText(couponsBean.getCouponCode());
-        binding.txtDiscount.setVisibility(View.VISIBLE);
-        binding.txtDiscount.setText("- " + "\u20b9" + couponsBean.getValue());
 
-        orderCalculation(Integer.parseInt(couponsBean.getValue()), couponsBean.getId());
+        if (grandTotal>=100){
+            addPhotoBottomDialogFragment.dismiss();
+            binding.txtViewOffers.setText("Remove");
+            binding.txtPromoCode.setText(couponsBean.getCouponCode());
+            binding.txtDiscount.setVisibility(View.VISIBLE);
+            binding.txtDiscount.setText("- " + "\u20b9" + couponsBean.getValue());
 
-        binding.txtViewOffers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (binding.txtViewOffers.getText().toString().equalsIgnoreCase("Remove")) {
-                    binding.txtPromoCode.setText(R.string.select_a_promo_code);
-                    binding.txtViewOffers.setText(R.string.view_offers);
-                    binding.txtDiscount.setVisibility(View.GONE);
-                    binding.txtDiscount.setText("0.00");
-                    orderCalculation(0, 0);
-                } else {
-                    showBottomSheet();
+            orderCalculation(Integer.parseInt(couponsBean.getValue()), couponsBean.getId());
+
+            binding.txtViewOffers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (binding.txtViewOffers.getText().toString().equalsIgnoreCase("Remove")) {
+                        binding.txtPromoCode.setText(R.string.select_a_promo_code);
+                        binding.txtViewOffers.setText(R.string.view_offers);
+                        binding.txtDiscount.setVisibility(View.GONE);
+                        binding.txtDiscount.setText("0.00");
+                        orderCalculation(0, 0);
+                    } else {
+                        showBottomSheet();
+                    }
+
                 }
+            });
+        }else {
+            Toast.makeText(requireActivity(), "Minimum Order should be 100", Toast.LENGTH_SHORT).show();
+        }
 
-            }
-        });
+
     }
 
 

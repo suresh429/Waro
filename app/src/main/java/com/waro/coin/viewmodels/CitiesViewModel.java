@@ -23,7 +23,7 @@ public class CitiesViewModel extends ViewModel {
         }
         Repository repository = Repository.getInstance(context);
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("page", id);
 
         mutableLiveData = repository.getCitiesData(jsonObject);
         progressbarObservable = repository.getProgressbarObservable();

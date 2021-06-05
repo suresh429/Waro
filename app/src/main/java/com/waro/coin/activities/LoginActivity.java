@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_continue) {
-            customer(binding.etMobile.getText().toString());
+            customer(Objects.requireNonNull(binding.etMobile.getText()).toString());
 
         }
     }

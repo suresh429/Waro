@@ -3,10 +3,13 @@ package com.waro.coin.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -37,6 +40,7 @@ import static com.waro.coin.network.RetrofitService.IMAGE_HOME_URL;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
 
+    private static final String TAG = "CategoryListAdapter";
     List<CategoriesResponse.DataBean> modelList;
     Context context;
     String cityId;
@@ -64,13 +68,20 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         String cityId = location.get("cityId");*/
         CategoriesResponse.DataBean dataBean = modelList.get(position);
 
+        Log.d(TAG, "onBindViewHolder: "+modelList.size());
+        if (modelList.size() > 1){
+            holder.rowItemBinding.cardLayout.setVisibility(View.VISIBLE);
+        }else {
+            holder.rowItemBinding.cardLayout.setVisibility(View.GONE);
+        }
+
         holder.rowItemBinding.catName.setText(modelList.get(position).getCategoryname());
 
         Glide.with(context).load(IMAGE_HOME_URL + modelList.get(position).getImage())
                 .error(R.drawable.placeholder).into(holder.rowItemBinding.catImage);
 
 
-        shopList(cityId,dataBean.getId(),holder.rowItemBinding.shopListRecycler);
+        shopList(cityId,dataBean.getId(),holder.rowItemBinding.shopListRecycler,holder.rowItemBinding.cardLayout);
 
         holder.rowItemBinding.getRoot().setOnClickListener(v -> {
 
@@ -89,6 +100,15 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         return modelList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CatgoeryListItemBinding rowItemBinding;
@@ -99,10 +119,10 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         }
     }
 
-    private void shopList(String city_id, int category_id, RecyclerView shopListRecycler){
+    private void shopList(String city_id, int category_id, RecyclerView shopListRecycler, CardView cardLayout){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("city_id", city_id);
-        jsonObject.addProperty("category_id", 1);
+        jsonObject.addProperty("category_id", category_id);
         Call<ShopsListResponse> call = RetrofitService.createService(ApiInterface.class, context).getShopsList(jsonObject);
         call.enqueue(new Callback<ShopsListResponse>() {
             @SuppressLint("SetTextI18n")
@@ -112,6 +132,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 if (response.isSuccessful()) {
                     List<ShopsListResponse.DataBean> catDetailsBeanList = response.body().getData();
                     List<ShopsListResponse.DataBean> filterDataBean = CollectionsKt.filter(catDetailsBeanList, s -> !s.getStatus().equals("0"));
+
+
 
                    // CatSubListAdapter adapter = new CatSubListAdapter(filterDataBean,context);
                     ShopsListAdapter adapter = new ShopsListAdapter(filterDataBean,context);

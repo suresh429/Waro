@@ -22,6 +22,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeHome" />
         <activity android:name="com.waro.coin.activities.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.waro.coin.activities.RegistrationActivity"

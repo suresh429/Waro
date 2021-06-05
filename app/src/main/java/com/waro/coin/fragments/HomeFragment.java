@@ -206,6 +206,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Loca
 
         // get home data
         bannersViewModel.getRepository().observe(getViewLifecycleOwner(), homeResponse -> {
+            Log.d(TAG, "bannerList: "+homeResponse.getStatus());
             if (homeResponse.getStatus().equalsIgnoreCase("true")) {
                 List<BannerResponse.DataBean> dataBeans = homeResponse.getData();
 
@@ -214,14 +215,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Loca
                     imageList.add(new SlideModel(IMAGE_HOME_URL+dataBean.getImage(), ScaleTypes.FIT));
                 }
 
-                binding.imageSlider.setImageList(imageList);
 
+                binding.imageSlider.setImageList(imageList);
+                binding.parentCard.setVisibility(View.VISIBLE);
                 binding.progressBar.setVisibility(View.GONE);
                 binding.noInternet.noInternet.setVisibility(View.GONE);
                 //shopsListAdapter.notifyDataSetChanged();
             } else {
-                Util.snackBar(requireView().getRootView(), "No Locations Found!", Color.RED);
+              //  Util.snackBar(requireView().getRootView(), "No Banners Found!", Color.RED);
                 binding.noInternet.noInternet.setVisibility(View.GONE);
+                binding.parentCard.setVisibility(View.GONE);
             }
 
 
